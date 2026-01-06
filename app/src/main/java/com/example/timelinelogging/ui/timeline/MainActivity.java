@@ -12,6 +12,14 @@ import com.example.timelinelogging.adapter.TimelineAdapter;
 import com.example.timelinelogging.data.entity.Post;
 import com.example.timelinelogging.viewmodel.PostViewModel;
 
+import android.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+
+import com.example.timelinelogging.utils.TimeUtils;
+
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +43,32 @@ public class MainActivity extends AppCompatActivity {
             adapter.setPostList(posts);
         });
 
-        // Temporary test insert
-        postViewModel.insert(new Post("Started Room Database", "10:00 AM"));
+        findViewById(R.id.fabAddPost).setOnClickListener(v -> showAddPostDialog());
     }
+
+    private void showAddPostDialog() {
+
+        View view = LayoutInflater.from(this)
+                .inflate(R.layout.dialog_add_post, null);
+
+        EditText etPost = view.findViewById(R.id.etPostContent);
+
+        new AlertDialog.Builder(this)
+                .setTitle("New Timeline Entry")
+                .setView(view)
+                .setPositiveButton("Add", (dialog, which) -> {
+
+                    String content = etPost.getText().toString().trim();
+
+                    if (!content.isEmpty()) {
+                        String time = TimeUtils.getCurrentTime();
+                        Post post = new Post(content, time);
+                        postViewModel.insert(post);
+                    }
+
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
 }
