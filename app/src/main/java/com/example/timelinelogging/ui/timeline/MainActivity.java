@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.timelinelogging.R;
 import com.example.timelinelogging.adapter.TimelineAdapter;
 import com.example.timelinelogging.data.entity.Post;
+import com.example.timelinelogging.utils.PDFUtils;
 import com.example.timelinelogging.viewmodel.PostViewModel;
 
 import android.app.AlertDialog;
@@ -112,6 +113,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.fabAddPost).setOnClickListener(v -> showAddPostDialog());
+        findViewById(R.id.fabExportPDF).setOnClickListener(v -> {
+            postViewModel.getPostsByDate(todayDate)
+                    .observe(MainActivity.this, posts -> {
+                        if (!posts.isEmpty()) {
+                            PDFUtils.exportPostsToPDF(MainActivity.this, posts, "Timeline_" + todayDate);
+                        }
+                    });
+        });
+
     }
 
 

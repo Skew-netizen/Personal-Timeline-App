@@ -45,4 +45,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.8.6"
     implementation "androidx.lifecycle:lifecycle-livedata:2.8.6"
 
+    implementation 'com.itextpdf:itext7-core:7.2.5'
+
+
 }
