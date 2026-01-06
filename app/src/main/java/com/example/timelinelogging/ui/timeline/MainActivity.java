@@ -16,13 +16,16 @@ import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.timelinelogging.utils.TimeUtils;
 
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,10 +44,40 @@ public class MainActivity extends AppCompatActivity {
 
         postViewModel = new ViewModelProvider(this).get(PostViewModel.class);
 
+        String todayDate = TimeUtils.getCurrentDate();
+
+        TextView tvSummary = findViewById(R.id.tvDailySummary);
+
+        postViewModel.getPostCountForDate(todayDate)
+                .observe(this, count -> {
+                    tvSummary.setText("Today's Posts: " + count);
+                });
+
         // Default: show all posts
         postViewModel.getAllPosts().observe(this, posts -> {
             adapter.setPostList(posts);
         });
+
+        CalendarView calendarView = findViewById(R.id.calendarView);
+
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            // month starts from 0 in CalendarView, so add 1
+            String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth);
+
+            // Observe posts for selected date
+            postViewModel.getPostsByDate(selectedDate)
+                    .observe(MainActivity.this, posts -> {
+                        adapter.setPostList(posts);
+                    });
+
+            // Optionally update daily summary
+            postViewModel.getPostCountForDate(selectedDate)
+                    .observe(MainActivity.this, count -> {
+                        tvSummary.setText("Posts on " + selectedDate + ": " + count);
+                    });
+        });
+
+
 
         // TAG FILTER LOGIC
         Spinner spinnerFilter = findViewById(R.id.spinnerFilter);
@@ -113,7 +146,8 @@ public class MainActivity extends AppCompatActivity {
                     if (!content.isEmpty()) {
                         String time = TimeUtils.getCurrentTime();
                         String tag = spinnerTag.getSelectedItem().toString();
-                        Post post = new Post(content, time, tag);
+                        String date = TimeUtils.getCurrentDate();
+                        Post post = new Post(content, time, tag, date);
                         postViewModel.insert(post);
                     }
 

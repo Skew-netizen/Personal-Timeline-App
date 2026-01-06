@@ -33,4 +33,16 @@ public class PostRepository {
         return postDao.getPostsByTag(tag);
     }
 
+    public LiveData<List<Post>> getPostsByDate(String date) {
+        return postDao.getPostsByDate(date);
+    }
+
+
+    public LiveData<Integer> getPostCountForDate(String date) {
+        return postDao.getPostCountForDate(date);
+    }
+
+    public LiveData<Integer> getPostCountByTag(String date, String tag) {
+        return postDao.getPostCountByTag(date, tag);
+    }
 }

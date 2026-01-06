@@ -34,4 +34,18 @@ public class PostViewModel extends AndroidViewModel {
         return repository.getPostsByTag(tag);
     }
 
+    public LiveData<Integer> getPostCountForDate(String date) {
+        return repository.getPostCountForDate(date);
+    }
+
+    public LiveData<Integer> getPostCountByTag(String date, String tag) {
+        return repository.getPostCountByTag(date, tag);
+    }
+
+    public LiveData<List<Post>> getPostsByDate(String date) {
+        return repository.getPostsByDate(date);
+    }
+
+
+
 }

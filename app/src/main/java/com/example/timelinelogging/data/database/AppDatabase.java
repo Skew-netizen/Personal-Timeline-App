@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.timelinelogging.data.dao.PostDao;
 import com.example.timelinelogging.data.entity.Post;
 
-@Database(entities = {Post.class}, version = 2)
+@Database(entities = {Post.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;

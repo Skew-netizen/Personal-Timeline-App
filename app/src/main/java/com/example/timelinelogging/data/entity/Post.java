@@ -12,11 +12,13 @@ public class Post {
     private String content;
     private String time;
     private String tag;
+    private String date;
 
-    public Post(String content, String time, String tag) {
+    public Post(String content, String time, String tag, String date) {
         this.content = content;
         this.time = time;
         this.tag = tag;
+        this.date = date;
     }
 
     public int getPostId() {
@@ -37,6 +39,10 @@ public class Post {
 
     public String getTag() {
         return tag;
+    }
+
+    public String getDate() {
+        return date;
     }
 }
 

@@ -21,4 +21,15 @@ public interface PostDao {
     @Query("SELECT * FROM posts WHERE tag = :tag ORDER BY postId DESC")
     LiveData<List<Post>> getPostsByTag(String tag);
 
+    @Query("SELECT COUNT(*) FROM posts WHERE date = :date")
+    LiveData<Integer> getPostCountForDate(String date);
+
+    @Query("SELECT COUNT(*) FROM posts WHERE date = :date AND tag = :tag")
+    LiveData<Integer> getPostCountByTag(String date, String tag);
+
+    @Query("SELECT * FROM posts WHERE date = :date ORDER BY time DESC")
+    LiveData<List<Post>> getPostsByDate(String date);
+
+
+
 }
