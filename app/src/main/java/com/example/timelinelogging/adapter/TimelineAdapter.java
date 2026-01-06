@@ -41,6 +41,12 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         return postList.size();
     }
 
+    public void setPostList(List<Post> posts) {
+        this.postList = posts;
+        notifyDataSetChanged();
+    }
+
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTime, tvContent;
