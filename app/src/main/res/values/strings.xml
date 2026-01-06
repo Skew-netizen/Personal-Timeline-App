@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Timeline &amp; Logging</string>
+    <string-array name="post_tags">
+        <item>Personal</item>
+        <item>Work</item>
+        <item>Study</item>
+        <item>Travel</item>
+    </string-array>
+
 </resources>

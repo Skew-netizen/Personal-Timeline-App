@@ -17,6 +17,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
 
     private List<Post> postList;
 
+
     public TimelineAdapter(List<Post> postList) {
         this.postList = postList;
     }
@@ -34,6 +35,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         Post post = postList.get(position);
         holder.tvTime.setText(post.getTime());
         holder.tvContent.setText(post.getContent());
+        holder.tvTag.setText(post.getTag());
     }
 
     @Override
@@ -49,12 +51,13 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTime, tvContent;
+        TextView tvTime, tvContent,tvTag;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvContent = itemView.findViewById(R.id.tvContent);
+            tvTag = itemView.findViewById(R.id.tvTag);
         }
     }
 }

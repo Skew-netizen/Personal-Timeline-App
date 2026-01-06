@@ -17,4 +17,8 @@ public interface PostDao {
 
     @Query("SELECT * FROM posts ORDER BY postId DESC")
     LiveData<List<Post>> getAllPosts();
+
+    @Query("SELECT * FROM posts WHERE tag = :tag ORDER BY postId DESC")
+    LiveData<List<Post>> getPostsByTag(String tag);
+
 }

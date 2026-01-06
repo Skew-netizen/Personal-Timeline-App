@@ -20,6 +20,15 @@
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/tvTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Work"
+            android:textStyle="italic"
+            android:textSize="12sp"/>
+
+
+        <TextView
             android:id="@+id/tvContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

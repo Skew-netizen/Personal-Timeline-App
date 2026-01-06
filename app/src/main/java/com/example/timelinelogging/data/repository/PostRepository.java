@@ -28,4 +28,9 @@ public class PostRepository {
     public void insert(Post post) {
         postDao.insert(post);
     }
+
+    public LiveData<List<Post>> getPostsByTag(String tag) {
+        return postDao.getPostsByTag(tag);
+    }
+
 }

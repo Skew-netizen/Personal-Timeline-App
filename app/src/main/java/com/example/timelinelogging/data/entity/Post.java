@@ -11,10 +11,12 @@ public class Post {
 
     private String content;
     private String time;
+    private String tag;
 
-    public Post(String content, String time) {
+    public Post(String content, String time, String tag) {
         this.content = content;
         this.time = time;
+        this.tag = tag;
     }
 
     public int getPostId() {
@@ -32,4 +34,9 @@ public class Post {
     public String getTime() {
         return time;
     }
+
+    public String getTag() {
+        return tag;
+    }
 }
+

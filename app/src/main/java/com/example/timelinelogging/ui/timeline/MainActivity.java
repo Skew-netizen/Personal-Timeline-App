@@ -15,7 +15,9 @@ import com.example.timelinelogging.viewmodel.PostViewModel;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.timelinelogging.utils.TimeUtils;
 
@@ -39,12 +41,46 @@ public class MainActivity extends AppCompatActivity {
 
         postViewModel = new ViewModelProvider(this).get(PostViewModel.class);
 
+        // Default: show all posts
         postViewModel.getAllPosts().observe(this, posts -> {
             adapter.setPostList(posts);
         });
 
+        // TAG FILTER LOGIC
+        Spinner spinnerFilter = findViewById(R.id.spinnerFilter);
+
+        ArrayAdapter<CharSequence> filterAdapter =
+                ArrayAdapter.createFromResource(
+                        this,
+                        R.array.post_tags,
+                        android.R.layout.simple_spinner_item
+                );
+
+        filterAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+        );
+
+        spinnerFilter.setAdapter(filterAdapter);
+
+        spinnerFilter.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
+                String selectedTag = parent.getItemAtPosition(position).toString();
+
+                postViewModel.getPostsByTag(selectedTag)
+                        .observe(MainActivity.this, posts -> {
+                            adapter.setPostList(posts);
+                        });
+            }
+
+            @Override
+            public void onNothingSelected(android.widget.AdapterView<?> parent) {
+            }
+        });
+
         findViewById(R.id.fabAddPost).setOnClickListener(v -> showAddPostDialog());
     }
+
 
     private void showAddPostDialog() {
 
@@ -52,6 +88,20 @@ public class MainActivity extends AppCompatActivity {
                 .inflate(R.layout.dialog_add_post, null);
 
         EditText etPost = view.findViewById(R.id.etPostContent);
+        Spinner spinnerTag = view.findViewById(R.id.spinnerTag);
+
+        ArrayAdapter<CharSequence> adapterSpinner =
+                ArrayAdapter.createFromResource(
+                        this,
+                        R.array.post_tags,
+                        android.R.layout.simple_spinner_item
+                );
+
+        adapterSpinner.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+        );
+
+        spinnerTag.setAdapter(adapterSpinner);
 
         new AlertDialog.Builder(this)
                 .setTitle("New Timeline Entry")
@@ -62,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
                     if (!content.isEmpty()) {
                         String time = TimeUtils.getCurrentTime();
-                        Post post = new Post(content, time);
+                        String tag = spinnerTag.getSelectedItem().toString();
+                        Post post = new Post(content, time, tag);
                         postViewModel.insert(post);
                     }
 
@@ -70,5 +121,6 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
 
 }

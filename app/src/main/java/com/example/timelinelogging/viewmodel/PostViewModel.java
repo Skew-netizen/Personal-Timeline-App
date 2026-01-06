@@ -29,4 +29,9 @@ public class PostViewModel extends AndroidViewModel {
     public void insert(Post post) {
         repository.insert(post);
     }
+
+    public LiveData<List<Post>> getPostsByTag(String tag) {
+        return repository.getPostsByTag(tag);
+    }
+
 }
