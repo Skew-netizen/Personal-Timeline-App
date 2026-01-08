@@ -44,5 +44,13 @@ public class Post {
     public String getDate() {
         return date;
     }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 }
 

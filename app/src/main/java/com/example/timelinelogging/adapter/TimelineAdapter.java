@@ -18,9 +18,11 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
     private List<Post> postList;
 
 
-    public TimelineAdapter(List<Post> postList) {
+    public TimelineAdapter(List<Post> postList, OnPostLongClickListener listener) {
         this.postList = postList;
+        this.listener = listener;
     }
+
 
     @NonNull
     @Override
@@ -36,6 +38,11 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         holder.tvTime.setText(post.getTime());
         holder.tvContent.setText(post.getContent());
         holder.tvTag.setText(post.getTag());
+        holder.itemView.setOnLongClickListener(v -> {
+            listener.onPostLongClick(post);
+            return true;
+        });
+
     }
 
     @Override
@@ -60,4 +67,11 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
             tvTag = itemView.findViewById(R.id.tvTag);
         }
     }
+
+    public interface OnPostLongClickListener {
+        void onPostLongClick(Post post);
+    }
+
+    private OnPostLongClickListener listener;
+
 }

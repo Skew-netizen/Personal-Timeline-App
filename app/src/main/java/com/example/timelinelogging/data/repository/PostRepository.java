@@ -29,6 +29,14 @@ public class PostRepository {
         postDao.insert(post);
     }
 
+    public void update(Post post) {
+        postDao.update(post);
+    }
+
+    public void delete(Post post) {
+        postDao.delete(post);
+    }
+
     public LiveData<List<Post>> getPostsByTag(String tag) {
         return postDao.getPostsByTag(tag);
     }

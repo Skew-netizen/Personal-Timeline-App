@@ -30,6 +30,14 @@ public class PostViewModel extends AndroidViewModel {
         repository.insert(post);
     }
 
+    public void update(Post post) {
+        repository.update(post);
+    }
+
+    public void delete(Post post) {
+        repository.delete(post);
+    }
+
     public LiveData<List<Post>> getPostsByTag(String tag) {
         return repository.getPostsByTag(tag);
     }
